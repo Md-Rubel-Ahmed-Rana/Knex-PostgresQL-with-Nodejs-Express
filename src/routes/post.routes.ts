@@ -1,4 +1,4 @@
-const { postControllers } = require("../controller/post.controller");
+import { postControllers } from "../controller/post.controller";
 
 const router = require("express").Router();
 
@@ -12,6 +12,4 @@ router.patch("/update/:id", postControllers.update);
 
 router.delete("/delete/:id", postControllers.deletePost);
 
-module.exports = {
-  postRoutes: router,
-};
+export const postRoutes = router;

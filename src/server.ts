@@ -1,8 +1,8 @@
-const express = require("express");
-const { rootRoutes } = require("./routes/root.routes");
+import express, { Application } from "express";
+import { rootRoutes } from "./routes/root.routes";
 const port = process.env.PORT || 5000;
 
-const app = express();
+const app: Application = express();
 
 app.use(express.json());
 
