@@ -7,6 +7,9 @@ class Controller {
       const { email, password } = req.body;
       const token = await AuthService.login(email, password);
 
+      // Set the token in the cookie
+      res.cookie("accessToken", token, { httpOnly: true });
+
       res.status(200).json({
         success: true,
         message: "Login successful",
@@ -35,6 +38,23 @@ class Controller {
       res.status(401).json({
         success: false,
         message: "Authentication failed",
+        error: error.message,
+      });
+    }
+  }
+
+  async logout(req: Request, res: Response) {
+    try {
+      res.clearCookie("accessToken");
+      res.status(200).json({
+        success: true,
+        message: "Logout successful",
+        data: null,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Logout failed",
         error: error.message,
       });
     }

@@ -17,6 +17,8 @@ class Controller {
             try {
                 const { email, password } = req.body;
                 const token = yield auth_service_1.AuthService.login(email, password);
+                // Set the token in the cookie
+                res.cookie("accessToken", token, { httpOnly: true });
                 res.status(200).json({
                     success: true,
                     message: "Login successful",
@@ -47,6 +49,25 @@ class Controller {
                 res.status(401).json({
                     success: false,
                     message: "Authentication failed",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    logout(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                res.clearCookie("accessToken");
+                res.status(200).json({
+                    success: true,
+                    message: "Logout successful",
+                    data: null,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Logout failed",
                     error: error.message,
                 });
             }
