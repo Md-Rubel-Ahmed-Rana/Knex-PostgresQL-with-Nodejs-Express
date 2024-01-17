@@ -31,6 +31,46 @@ class Controller {
             }
         });
     }
+    findSongsByAlbum(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const album_id = Number(req.params.album_id);
+                const data = yield song_service_1.SongService.findSongsByAlbum(album_id);
+                res.status(200).json({
+                    success: true,
+                    message: "Songs found",
+                    data: data,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error finding songs",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    findSongsByArtist(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user_id = Number(req.params.user_id);
+                const data = yield song_service_1.SongService.findSongsByArtist(user_id);
+                res.status(200).json({
+                    success: true,
+                    message: "Songs found",
+                    data: data,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error finding songs",
+                    error: error.message,
+                });
+            }
+        });
+    }
     insertOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

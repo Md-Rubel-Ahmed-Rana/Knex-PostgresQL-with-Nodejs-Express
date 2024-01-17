@@ -10,6 +10,8 @@ const requestValidator_1 = __importDefault(require("../middlewares/requestValida
 const song_validate_1 = require("../validations/song.validate");
 const router = (0, express_1.Router)();
 router.get("/", song_controller_1.SongController.findMany);
+router.get("/album/:album_id", song_controller_1.SongController.findSongsByAlbum);
+router.get("/artist/:user_id", song_controller_1.SongController.findSongsByArtist);
 router.post("/add", (0, requestValidator_1.default)(song_validate_1.songValidatorPostSchema), song_controller_1.SongController.insertOne);
 router.patch("/update/:id", (0, requestValidator_1.default)(song_validate_1.songValidatorUpdateSchema), song_controller_1.SongController.updateOne);
 router.delete("/delete/:id", song_controller_1.SongController.deleteOne);

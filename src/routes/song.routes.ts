@@ -10,6 +10,10 @@ const router = Router();
 
 router.get("/", SongController.findMany);
 
+router.get("/album/:album_id", SongController.findSongsByAlbum);
+
+router.get("/artist/:user_id", SongController.findSongsByArtist);
+
 router.post(
   "/add",
   requestValidator(songValidatorPostSchema),

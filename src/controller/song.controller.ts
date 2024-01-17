@@ -19,6 +19,41 @@ class Controller {
     }
   }
 
+  async findSongsByAlbum(req: Request, res: Response) {
+    try {
+      const album_id = Number(req.params.album_id);
+      const data = await SongService.findSongsByAlbum(album_id);
+      res.status(200).json({
+        success: true,
+        message: "Songs found",
+        data: data,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error finding songs",
+        error: error.message,
+      });
+    }
+  }
+  async findSongsByArtist(req: Request, res: Response) {
+    try {
+      const user_id = Number(req.params.user_id);
+      const data = await SongService.findSongsByArtist(user_id);
+      res.status(200).json({
+        success: true,
+        message: "Songs found",
+        data: data,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error finding songs",
+        error: error.message,
+      });
+    }
+  }
+
   async insertOne(req: Request, res: Response) {
     try {
       const newData = await SongService.insertOne(req.body);

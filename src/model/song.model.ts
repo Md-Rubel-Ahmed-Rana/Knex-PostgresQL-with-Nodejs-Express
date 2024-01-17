@@ -8,6 +8,14 @@ export class SongModel {
     return Model.select("*").from(this.tableName);
   }
 
+  public static async findSongsByAlbum(album_id: number) {
+    return Model.select("*").from(this.tableName).where({ album_id });
+  }
+
+  public static async findSongsByArtist(user_id: number) {
+    return Model.select("*").from(this.tableName).where({ user_id });
+  }
+
   public static async insertOne(data: ISong) {
     return Model(this.tableName).insert(data).returning("*");
   }

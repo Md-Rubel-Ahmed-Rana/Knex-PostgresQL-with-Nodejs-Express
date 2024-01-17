@@ -18,6 +18,18 @@ class Service {
             return data;
         });
     }
+    findSongsByAlbum(album_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield song_model_1.SongModel.findSongsByAlbum(album_id);
+            return data;
+        });
+    }
+    findSongsByArtist(user_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield song_model_1.SongModel.findSongsByArtist(user_id);
+            return data;
+        });
+    }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = yield song_model_1.SongModel.findById(id);

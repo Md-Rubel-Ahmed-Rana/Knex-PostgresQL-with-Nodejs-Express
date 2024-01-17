@@ -6,6 +6,15 @@ class Service {
     const data = await SongModel.findMany();
     return data;
   }
+  async findSongsByAlbum(album_id: number) {
+    const data = await SongModel.findSongsByAlbum(album_id);
+    return data;
+  }
+
+  async findSongsByArtist(user_id: number) {
+    const data = await SongModel.findSongsByArtist(user_id);
+    return data;
+  }
 
   async findById(id: string) {
     const data = await SongModel.findById(id);

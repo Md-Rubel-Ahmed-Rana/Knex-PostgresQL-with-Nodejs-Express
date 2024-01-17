@@ -17,6 +17,16 @@ class SongModel {
             return knex_1.Model.select("*").from(this.tableName);
         });
     }
+    static findSongsByAlbum(album_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return knex_1.Model.select("*").from(this.tableName).where({ album_id });
+        });
+    }
+    static findSongsByArtist(user_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return knex_1.Model.select("*").from(this.tableName).where({ user_id });
+        });
+    }
     static insertOne(data) {
         return __awaiter(this, void 0, void 0, function* () {
             return (0, knex_1.Model)(this.tableName).insert(data).returning("*");
