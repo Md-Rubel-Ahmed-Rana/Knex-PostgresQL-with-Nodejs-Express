@@ -33,7 +33,7 @@ class Service {
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = yield song_model_1.SongModel.findById(id);
-            return data === null || data === void 0 ? void 0 : data.rows[0];
+            return data;
         });
     }
     insertOne(data) {

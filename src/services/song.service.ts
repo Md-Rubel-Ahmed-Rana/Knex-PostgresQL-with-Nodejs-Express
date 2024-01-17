@@ -1,4 +1,5 @@
 import { ISong } from "../interfaces/song.interface";
+import { IUser } from "../interfaces/user.interface";
 import { SongModel } from "../model/song.model";
 
 class Service {
@@ -18,7 +19,7 @@ class Service {
 
   async findById(id: number) {
     const data = await SongModel.findById(id);
-    return data?.rows[0];
+    return data;
   }
 
   async insertOne(data: ISong) {

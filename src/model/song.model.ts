@@ -1,19 +1,51 @@
 import { Model } from "../database/knex";
 import { ISong } from "../interfaces/song.interface";
+import { IUser } from "../interfaces/user.interface";
+const knex_populate = require("knex-populate");
 
 export class SongModel {
   static tableName: string = "songs";
 
   public static async findMany() {
-    return Model.select("*").from(this.tableName);
+    const songs = await knex_populate(Model, this.tableName)
+      .find()
+      .populate("users", "user_id", "artist")
+      .populate("albums", "album_id", "album")
+      .exec();
+
+    songs?.forEach((song: any) => {
+      delete song?.artist[0]?.password;
+    });
+
+    return songs;
   }
 
   public static async findSongsByAlbum(album_id: number) {
-    return Model.select("*").from(this.tableName).where({ album_id });
+    const songs = await knex_populate(Model, this.tableName)
+      .find({ album_id })
+      .populate("users", "user_id", "artist")
+      .populate("albums", "album_id", "album")
+      .exec();
+
+    songs?.forEach((song: any) => {
+      delete song?.artist[0]?.password;
+    });
+
+    return songs;
   }
 
   public static async findSongsByArtist(user_id: number) {
-    return Model.select("*").from(this.tableName).where({ user_id });
+    const songs = await knex_populate(Model, this.tableName)
+      .find({ user_id })
+      .populate("users", "user_id", "artist")
+      .populate("albums", "album_id", "album")
+      .exec();
+
+    songs?.forEach((song: any) => {
+      delete song?.artist[0]?.password;
+    });
+
+    return songs;
   }
 
   public static async insertOne(data: ISong) {
@@ -21,7 +53,17 @@ export class SongModel {
   }
 
   public static async findById(id: number) {
-    return Model.raw(`select * from ${this.tableName} where id = ${id}`);
+    const [song] = await knex_populate(Model, this.tableName)
+      .findById(id)
+      .populate("users", "user_id", "artist")
+      .populate("albums", "album_id", "album")
+      .exec();
+
+    song?.artist?.forEach((artist: Partial<IUser>) => {
+      delete artist?.password;
+    });
+
+    return song;
   }
 
   public static async updateOne(id: number, data: ISong) {

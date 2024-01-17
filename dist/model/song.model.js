@@ -11,20 +11,48 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SongModel = void 0;
 const knex_1 = require("../database/knex");
+const knex_populate = require("knex-populate");
 class SongModel {
     static findMany() {
         return __awaiter(this, void 0, void 0, function* () {
-            return knex_1.Model.select("*").from(this.tableName);
+            const songs = yield knex_populate(knex_1.Model, this.tableName)
+                .find()
+                .populate("users", "user_id", "artist")
+                .populate("albums", "album_id", "album")
+                .exec();
+            songs === null || songs === void 0 ? void 0 : songs.forEach((song) => {
+                var _a;
+                (_a = song === null || song === void 0 ? void 0 : song.artist[0]) === null || _a === void 0 ? true : delete _a.password;
+            });
+            return songs;
         });
     }
     static findSongsByAlbum(album_id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return knex_1.Model.select("*").from(this.tableName).where({ album_id });
+            const songs = yield knex_populate(knex_1.Model, this.tableName)
+                .find({ album_id })
+                .populate("users", "user_id", "artist")
+                .populate("albums", "album_id", "album")
+                .exec();
+            songs === null || songs === void 0 ? void 0 : songs.forEach((song) => {
+                var _a;
+                (_a = song === null || song === void 0 ? void 0 : song.artist[0]) === null || _a === void 0 ? true : delete _a.password;
+            });
+            return songs;
         });
     }
     static findSongsByArtist(user_id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return knex_1.Model.select("*").from(this.tableName).where({ user_id });
+            const songs = yield knex_populate(knex_1.Model, this.tableName)
+                .find({ user_id })
+                .populate("users", "user_id", "artist")
+                .populate("albums", "album_id", "album")
+                .exec();
+            songs === null || songs === void 0 ? void 0 : songs.forEach((song) => {
+                var _a;
+                (_a = song === null || song === void 0 ? void 0 : song.artist[0]) === null || _a === void 0 ? true : delete _a.password;
+            });
+            return songs;
         });
     }
     static insertOne(data) {
@@ -33,8 +61,17 @@ class SongModel {
         });
     }
     static findById(id) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            return knex_1.Model.raw(`select * from ${this.tableName} where id = ${id}`);
+            const [song] = yield knex_populate(knex_1.Model, this.tableName)
+                .findById(id)
+                .populate("users", "user_id", "artist")
+                .populate("albums", "album_id", "album")
+                .exec();
+            (_a = song === null || song === void 0 ? void 0 : song.artist) === null || _a === void 0 ? void 0 : _a.forEach((artist) => {
+                artist === null || artist === void 0 ? true : delete artist.password;
+            });
+            return song;
         });
     }
     static updateOne(id, data) {
