@@ -8,7 +8,7 @@ class Service {
     return users;
   }
 
-  async findById(id: string) {
+  async findById(id: number) {
     const user = await UserModel.findById(id);
     return user;
   }
@@ -20,12 +20,12 @@ class Service {
     return newUser;
   }
 
-  async updateOne(id: string, data: IUser) {
+  async updateOne(id: number, data: IUser) {
     const updatedUser = await UserModel.updateOne(id, data);
     return updatedUser;
   }
 
-  async deleteOne(id: string) {
+  async deleteOne(id: number) {
     const updatedUser = await UserModel.deleteOne(id);
     return updatedUser;
   }

@@ -93,7 +93,7 @@ class Controller {
     updateOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const id = req.params.id;
+                const id = Number(req.params.id);
                 const updatedRow = yield song_service_1.SongService.updateOne(id, req.body);
                 res.status(200).json({
                     success: true,
@@ -113,7 +113,7 @@ class Controller {
     deleteOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const id = req.params.id;
+                const id = Number(req.params.id);
                 const data = yield song_service_1.SongService.deleteOne(id);
                 res.status(200).json({
                     success: true,
@@ -133,7 +133,7 @@ class Controller {
     findById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const id = req.params.id;
+                const id = Number(req.params.id);
                 const data = yield song_service_1.SongService.findById(id);
                 res.status(200).json({
                     success: true,

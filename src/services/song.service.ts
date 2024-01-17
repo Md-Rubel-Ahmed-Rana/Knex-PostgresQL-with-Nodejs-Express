@@ -16,7 +16,7 @@ class Service {
     return data;
   }
 
-  async findById(id: string) {
+  async findById(id: number) {
     const data = await SongModel.findById(id);
     return data?.rows[0];
   }
@@ -26,12 +26,12 @@ class Service {
     return newData;
   }
 
-  async updateOne(id: string, data: ISong) {
+  async updateOne(id: number, data: ISong) {
     const updatedRow = await SongModel.updateOne(id, data);
     return updatedRow[0];
   }
 
-  async deleteOne(id: string) {
+  async deleteOne(id: number) {
     const data = await SongModel.deleteOne(id);
     return data;
   }

@@ -34,7 +34,7 @@ class Controller {
     findById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const id = req.params.id;
+                const id = Number(req.params.id);
                 const user = yield user_service_1.UserService.findById(id);
                 res.status(200).json({
                     success: true,
@@ -73,7 +73,7 @@ class Controller {
     updateOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const id = req.params.id;
+                const id = Number(req.params.id);
                 const updatedUser = yield user_service_1.UserService.updateOne(id, req.body);
                 res.status(200).json({
                     success: true,
@@ -93,7 +93,7 @@ class Controller {
     deleteOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const id = req.params.id;
+                const id = Number(req.params.id);
                 yield user_service_1.UserService.deleteOne(id);
                 res.status(200).json({
                     success: true,

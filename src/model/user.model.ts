@@ -11,15 +11,15 @@ export class UserModel {
   public static async insertOne(data: IUser) {
     return Model(this.tableName).insert(data).returning("*");
   }
-  public static async findById(id: string) {
+  public static async findById(id: number) {
     return Model.raw(`select * from ${this.tableName} where id = ${id}`);
   }
 
-  public static async updateOne(id: string, data: IUser) {
+  public static async updateOne(id: number, data: IUser) {
     return Model(this.tableName).where({ id }).update(data).returning("*");
   }
 
-  public static async deleteOne(id: string) {
+  public static async deleteOne(id: number) {
     return Model(this.tableName).where({ id }).del().returning("*");
   }
 

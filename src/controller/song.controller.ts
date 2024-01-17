@@ -73,7 +73,7 @@ class Controller {
 
   async updateOne(req: Request, res: Response) {
     try {
-      const id = req.params.id;
+      const id = Number(req.params.id);
       const updatedRow = await SongService.updateOne(id, req.body);
       res.status(200).json({
         success: true,
@@ -91,7 +91,7 @@ class Controller {
 
   async deleteOne(req: Request, res: Response) {
     try {
-      const id = req.params.id;
+      const id = Number(req.params.id);
       const data = await SongService.deleteOne(id);
       res.status(200).json({
         success: true,
@@ -109,7 +109,7 @@ class Controller {
 
   async findById(req: Request, res: Response) {
     try {
-      const id = req.params.id;
+      const id = Number(req.params.id);
       const data = await SongService.findById(id);
       res.status(200).json({
         success: true,

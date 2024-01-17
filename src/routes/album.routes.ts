@@ -5,25 +5,31 @@ import {
   albumValidatorPostSchema,
   albumValidatorUpdateSchema,
 } from "../validations/album.validate";
+import verifyJwt from "../middlewares/verifyJwt";
+import authGuard from "../middlewares/auth.guard";
 
 const router = Router();
 
-router.get("/", AlbumController.findMany);
+router.get("/", verifyJwt, authGuard, AlbumController.findMany);
 
 router.post(
   "/add",
+  verifyJwt,
+  authGuard,
   requestValidator(albumValidatorPostSchema),
   AlbumController.insertOne
 );
 
 router.patch(
   "/update/:id",
+  verifyJwt,
+  authGuard,
   requestValidator(albumValidatorUpdateSchema),
   AlbumController.updateOne
 );
 
-router.delete("/delete/:id", AlbumController.deleteOne);
+router.delete("/delete/:id", verifyJwt, authGuard, AlbumController.deleteOne);
 
-router.get("/single/:id", AlbumController.findById);
+router.get("/single/:id", verifyJwt, authGuard, AlbumController.findById);
 
 export const AlbumRoutes = router;
