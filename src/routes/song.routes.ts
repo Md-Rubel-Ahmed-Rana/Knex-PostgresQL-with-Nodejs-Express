@@ -1,13 +1,26 @@
 import { Router } from "express";
 import { SongController } from "../controller/song.controller";
+import requestValidator from "../middlewares/requestValidator";
+import {
+  songValidatorPostSchema,
+  songValidatorUpdateSchema,
+} from "../validations/song.validate";
 
 const router = Router();
 
 router.get("/", SongController.findMany);
 
-router.post("/add", SongController.insertOne);
+router.post(
+  "/add",
+  requestValidator(songValidatorPostSchema),
+  SongController.insertOne
+);
 
-router.patch("/update/:id", SongController.updateOne);
+router.patch(
+  "/update/:id",
+  requestValidator(songValidatorUpdateSchema),
+  SongController.updateOne
+);
 
 router.delete("/delete/:id", SongController.deleteOne);
 
