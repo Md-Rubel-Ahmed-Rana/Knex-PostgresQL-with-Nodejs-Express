@@ -37,6 +37,12 @@ class UserModel {
             return (0, knex_1.Model)(this.tableName).where({ id }).del().returning("*");
         });
     }
+    static findByEmail(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return knex_1.Model.select("*").from(this.tableName).where({ email }).first();
+            // return Model.raw(`select * from ${this.tableName} where email = ${email}`);
+        });
+    }
 }
 exports.UserModel = UserModel;
 UserModel.tableName = "users";

@@ -1,5 +1,3 @@
-console.log("From knexfile");
-
 module.exports = {
   client: "postgresql",
   connection: {

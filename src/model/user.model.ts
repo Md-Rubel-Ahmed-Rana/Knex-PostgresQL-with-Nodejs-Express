@@ -22,4 +22,9 @@ export class UserModel {
   public static async delete(id: string) {
     return Model(this.tableName).where({ id }).del().returning("*");
   }
+
+  public static async findByEmail(email: string) {
+    return Model.select("*").from(this.tableName).where({ email }).first();
+    // return Model.raw(`select * from ${this.tableName} where email = ${email}`);
+  }
 }

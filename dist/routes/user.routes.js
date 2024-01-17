@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userRoutes = void 0;
+exports.UserRoutes = void 0;
 const user_controller_1 = require("../controller/user.controller");
 const express_1 = require("express");
 const router = (0, express_1.Router)();
@@ -9,4 +9,4 @@ router.post("/create", user_controller_1.userController.create);
 router.patch("/update/:id", user_controller_1.userController.update);
 router.delete("/delete/:id", user_controller_1.userController.deleteUser);
 router.get("/single/:id", user_controller_1.userController.getUser);
-exports.userRoutes = router;
+exports.UserRoutes = router;
