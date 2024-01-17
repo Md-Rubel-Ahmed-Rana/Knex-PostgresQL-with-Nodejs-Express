@@ -9,32 +9,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ArtistService = void 0;
-const artist_model_1 = require("../model/artist.model");
+exports.AlbumService = void 0;
+const album_artists_model_1 = require("../model/album.artists.model");
+const album_model_1 = require("../model/album.model");
 const findMany = () => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield artist_model_1.ArtistModel.all();
+    const data = yield album_model_1.AlbumModel.findMany();
     return data;
 });
 const findById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield artist_model_1.ArtistModel.findById(id);
+    const data = yield album_model_1.AlbumModel.findById(id);
     return data === null || data === void 0 ? void 0 : data.rows[0];
 });
-const create = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    const newData = yield artist_model_1.ArtistModel.insert(data);
-    return newData;
+const insertOne = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const [newData] = yield album_model_1.AlbumModel.insertOne(data);
+    // create album_artist
+    if (newData) {
+        const albumArtistData = {
+            album_id: newData.id,
+            artist_id: newData.user_id,
+        };
+        yield album_artists_model_1.AlbumArtistModel.insertOne(albumArtistData);
+        return newData;
+    }
+    else {
+        return "Album did't added";
+    }
 });
-const update = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-    const updatedRow = yield artist_model_1.ArtistModel.update(id, data);
+const updateOne = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
+    const updatedRow = yield album_model_1.AlbumModel.updateOne(id, data);
     return updatedRow[0];
 });
 const deleteOne = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield artist_model_1.ArtistModel.delete(id);
+    const data = yield album_model_1.AlbumModel.deleteOne(id);
     return data;
 });
-exports.ArtistService = {
+exports.AlbumService = {
     findMany,
-    create,
-    update,
+    insertOne,
+    updateOne,
     findById,
     deleteOne,
 };

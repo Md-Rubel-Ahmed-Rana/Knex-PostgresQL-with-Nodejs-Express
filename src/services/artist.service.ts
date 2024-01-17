@@ -7,7 +7,7 @@ const findMany = async () => {
 };
 
 const findById = async (id: string) => {
-  const data = await ArtistModel.getUserById(id);
+  const data = await ArtistModel.findById(id);
   return data?.rows[0];
 };
 
