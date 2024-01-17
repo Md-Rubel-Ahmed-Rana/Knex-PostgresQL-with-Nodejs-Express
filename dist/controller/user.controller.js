@@ -9,35 +9,106 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userController = void 0;
+exports.UserController = void 0;
 const user_service_1 = require("../services/user.service");
-const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield user_service_1.userService.getAll();
-    res.send(users);
-});
-const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = yield user_service_1.userService.create(req.body);
-    res.send(newUser);
-});
-const update = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    const updatedUser = yield user_service_1.userService.update(id, req.body);
-    res.send(updatedUser);
-});
-const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    const updatedUser = yield user_service_1.userService.deleteUser(id);
-    res.send(updatedUser);
-});
-const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    const users = yield user_service_1.userService.getUser(id);
-    res.send(users.rows);
-});
-exports.userController = {
-    getAll,
-    create,
-    update,
-    deleteUser,
-    getUser,
-};
+class Controller {
+    findMany(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const users = yield user_service_1.UserService.findMany();
+                res.status(200).json({
+                    success: true,
+                    message: "Users found",
+                    data: users,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error finding users",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    findById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = req.params.id;
+                const user = yield user_service_1.UserService.findById(id);
+                res.status(200).json({
+                    success: true,
+                    message: "User found",
+                    data: user === null || user === void 0 ? void 0 : user.rows,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error finding user",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    insertOne(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const newUser = yield user_service_1.UserService.insertOne(req.body);
+                res.status(201).json({
+                    success: true,
+                    message: "User registered successfully",
+                    data: newUser,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error inserting user",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    updateOne(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = req.params.id;
+                const updatedUser = yield user_service_1.UserService.updateOne(id, req.body);
+                res.status(200).json({
+                    success: true,
+                    message: "User updated successfully",
+                    data: updatedUser,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error updating user",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    deleteOne(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = req.params.id;
+                yield user_service_1.UserService.deleteOne(id);
+                res.status(200).json({
+                    success: true,
+                    message: "User deleted successfully",
+                    data: null,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error deleting user",
+                    error: error.message,
+                });
+            }
+        });
+    }
+}
+exports.UserController = new Controller();

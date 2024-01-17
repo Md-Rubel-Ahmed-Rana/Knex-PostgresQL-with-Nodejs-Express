@@ -1,39 +1,94 @@
 import { Request, Response } from "express";
 import { SongService } from "../services/song.service";
 
-const findMany = async (req: Request, res: Response) => {
-  const data = await SongService.findMany();
-  res.send(data);
-};
+class Controller {
+  async findMany(req: Request, res: Response) {
+    try {
+      const data = await SongService.findMany();
+      res.status(200).json({
+        success: true,
+        message: "Songs found",
+        data: data,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error finding songs",
+        error: error.message,
+      });
+    }
+  }
 
-const insertOne = async (req: Request, res: Response) => {
-  const newData = await SongService.insertOne(req.body);
-  res.send(newData);
-};
+  async insertOne(req: Request, res: Response) {
+    try {
+      const newData = await SongService.insertOne(req.body);
+      res.status(201).json({
+        success: true,
+        message: "Song created",
+        data: newData,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error creating song",
+        error: error.message,
+      });
+    }
+  }
 
-const updateOne = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const updatedRow = await SongService.updateOne(id, req.body);
-  res.send(updatedRow);
-};
+  async updateOne(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+      const updatedRow = await SongService.updateOne(id, req.body);
+      res.status(200).json({
+        success: true,
+        message: "Song updated",
+        data: updatedRow,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error updating song",
+        error: error.message,
+      });
+    }
+  }
 
-const deleteOne = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const data = await SongService.deleteOne(id);
-  res.send(data);
-};
+  async deleteOne(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+      const data = await SongService.deleteOne(id);
+      res.status(200).json({
+        success: true,
+        message: "Song deleted",
+        data: data,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error deleting song",
+        error: error.message,
+      });
+    }
+  }
 
-const findById = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const data = await SongService.findById(id);
+  async findById(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+      const data = await SongService.findById(id);
+      res.status(200).json({
+        success: true,
+        message: "Song found",
+        data: data,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error finding song",
+        error: error.message,
+      });
+    }
+  }
+}
 
-  res.send(data);
-};
-
-export const SongController = {
-  findMany,
-  insertOne,
-  updateOne,
-  deleteOne,
-  findById,
-};
+export const SongController = new Controller();

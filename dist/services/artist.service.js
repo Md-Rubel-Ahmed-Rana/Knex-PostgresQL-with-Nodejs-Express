@@ -11,30 +11,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArtistService = void 0;
 const artist_model_1 = require("../model/artist.model");
-const findMany = () => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield artist_model_1.ArtistModel.all();
-    return data;
-});
-const findById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield artist_model_1.ArtistModel.findById(id);
-    return data === null || data === void 0 ? void 0 : data.rows[0];
-});
-const create = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    const newData = yield artist_model_1.ArtistModel.insert(data);
-    return newData;
-});
-const update = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-    const updatedRow = yield artist_model_1.ArtistModel.update(id, data);
-    return updatedRow[0];
-});
-const deleteOne = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield artist_model_1.ArtistModel.delete(id);
-    return data;
-});
-exports.ArtistService = {
-    findMany,
-    create,
-    update,
-    findById,
-    deleteOne,
-};
+class Service {
+    findMany() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield artist_model_1.ArtistModel.findMany();
+            return data;
+        });
+    }
+    findById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield artist_model_1.ArtistModel.findById(id);
+            return data === null || data === void 0 ? void 0 : data.rows[0];
+        });
+    }
+    insertOne(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const newData = yield artist_model_1.ArtistModel.insertOne(data);
+            return newData;
+        });
+    }
+    updateOne(id, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const updatedRow = yield artist_model_1.ArtistModel.updateOne(id, data);
+            return updatedRow[0];
+        });
+    }
+    deleteOne(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield artist_model_1.ArtistModel.deleteOne(id);
+            return data;
+        });
+    }
+}
+exports.ArtistService = new Service();

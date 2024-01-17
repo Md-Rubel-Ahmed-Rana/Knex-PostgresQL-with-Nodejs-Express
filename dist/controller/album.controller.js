@@ -11,33 +11,104 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AlbumController = void 0;
 const album_service_1 = require("../services/album.service");
-const findMany = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield album_service_1.AlbumService.findMany();
-    res.send(data);
-});
-const insertOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newData = yield album_service_1.AlbumService.insertOne(req.body);
-    res.send(newData);
-});
-const updateOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    const updatedRow = yield album_service_1.AlbumService.updateOne(id, req.body);
-    res.send(updatedRow);
-});
-const deleteOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    const data = yield album_service_1.AlbumService.deleteOne(id);
-    res.send(data);
-});
-const findById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    const data = yield album_service_1.AlbumService.findById(id);
-    res.send(data);
-});
-exports.AlbumController = {
-    findMany,
-    insertOne,
-    updateOne,
-    deleteOne,
-    findById,
-};
+class Controller {
+    findMany(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const data = yield album_service_1.AlbumService.findMany();
+                res.status(200).json({
+                    success: true,
+                    message: "Albums found",
+                    data: data,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error finding albums",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    findById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = req.params.id;
+                const data = yield album_service_1.AlbumService.findById(id);
+                res.status(200).json({
+                    success: true,
+                    message: "Album found",
+                    data: data,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error finding album",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    insertOne(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const newData = yield album_service_1.AlbumService.insertOne(req.body);
+                res.status(201).json({
+                    success: true,
+                    message: "Album created successfully",
+                    data: newData,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error inserting album",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    updateOne(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = req.params.id;
+                const updatedRow = yield album_service_1.AlbumService.updateOne(id, req.body);
+                res.status(200).json({
+                    success: true,
+                    message: "Album updated successfully",
+                    data: updatedRow,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error updating album",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    deleteOne(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = req.params.id;
+                yield album_service_1.AlbumService.deleteOne(id);
+                res.status(200).json({
+                    success: true,
+                    message: "Album updated successfully",
+                    data: null,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    message: "Error deleting album",
+                    error: error.message,
+                });
+            }
+        });
+    }
+}
+exports.AlbumController = new Controller();

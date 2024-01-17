@@ -1,20 +1,44 @@
 import { Request, Response } from "express";
 import { AuthService } from "../services/auth.service";
 
-const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  const user = await AuthService.login(email, password);
+class Controller {
+  async login(req: Request, res: Response) {
+    try {
+      const { email, password } = req.body;
+      const token = await AuthService.login(email, password);
 
-  res.send(user);
-};
+      res.status(200).json({
+        success: true,
+        message: "Login successful",
+        token: token,
+      });
+    } catch (error: any) {
+      res.status(401).json({
+        success: false,
+        message: "Login failed",
+        error: error.message,
+      });
+    }
+  }
 
-const auth = async (req: Request, res: Response) => {
-  const { email } = req;
-  const user = await AuthService.auth(email);
-  res.send(user);
-};
+  async auth(req: Request, res: Response) {
+    try {
+      const { email } = req.body;
+      const user = await AuthService.auth(email);
 
-export const AuthController = {
-  login,
-  auth,
-};
+      res.status(200).json({
+        success: true,
+        message: "Authentication successful",
+        user: user,
+      });
+    } catch (error: any) {
+      res.status(401).json({
+        success: false,
+        message: "Authentication failed",
+        error: error.message,
+      });
+    }
+  }
+}
+
+export const AuthController = new Controller();

@@ -11,30 +11,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SongService = void 0;
 const song_model_1 = require("../model/song.model");
-const findMany = () => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield song_model_1.SongModel.findMany();
-    return data;
-});
-const findById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield song_model_1.SongModel.findById(id);
-    return data === null || data === void 0 ? void 0 : data.rows[0];
-});
-const insertOne = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    const [newData] = yield song_model_1.SongModel.insertOne(data);
-    return newData;
-});
-const updateOne = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-    const updatedRow = yield song_model_1.SongModel.updateOne(id, data);
-    return updatedRow[0];
-});
-const deleteOne = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield song_model_1.SongModel.deleteOne(id);
-    return data;
-});
-exports.SongService = {
-    findMany,
-    insertOne,
-    updateOne,
-    findById,
-    deleteOne,
-};
+class Service {
+    findMany() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield song_model_1.SongModel.findMany();
+            return data;
+        });
+    }
+    findById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield song_model_1.SongModel.findById(id);
+            return data === null || data === void 0 ? void 0 : data.rows[0];
+        });
+    }
+    insertOne(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const [newData] = yield song_model_1.SongModel.insertOne(data);
+            return newData;
+        });
+    }
+    updateOne(id, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const updatedRow = yield song_model_1.SongModel.updateOne(id, data);
+            return updatedRow[0];
+        });
+    }
+    deleteOne(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield song_model_1.SongModel.deleteOne(id);
+            return data;
+        });
+    }
+}
+exports.SongService = new Service();

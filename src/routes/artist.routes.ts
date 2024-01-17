@@ -5,9 +5,9 @@ const router = Router();
 
 router.get("/", ArtistController.findMany);
 
-router.post("/add", ArtistController.create);
+router.post("/add", ArtistController.insertOne);
 
-router.patch("/update/:id", ArtistController.update);
+router.patch("/update/:id", ArtistController.updateOne);
 
 router.delete("/delete/:id", ArtistController.deleteOne);
 

@@ -1,39 +1,94 @@
-import { Request, Response } from "express";
-import { userService } from "../services/user.service";
+import { NextFunction, Request, Response } from "express";
+import { UserService } from "../services/user.service";
 
-const getAll = async (req: Request, res: Response) => {
-  const users = await userService.getAll();
-  res.send(users);
-};
+class Controller {
+  async findMany(req: Request, res: Response) {
+    try {
+      const users = await UserService.findMany();
+      res.status(200).json({
+        success: true,
+        message: "Users found",
+        data: users,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error finding users",
+        error: error.message,
+      });
+    }
+  }
 
-const create = async (req: Request, res: Response) => {
-  const newUser = await userService.create(req.body);
-  res.send(newUser);
-};
+  async findById(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+      const user = await UserService.findById(id);
+      res.status(200).json({
+        success: true,
+        message: "User found",
+        data: user?.rows,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error finding user",
+        error: error.message,
+      });
+    }
+  }
 
-const update = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const updatedUser = await userService.update(id, req.body);
-  res.send(updatedUser);
-};
+  async insertOne(req: Request, res: Response) {
+    try {
+      const newUser = await UserService.insertOne(req.body);
+      res.status(201).json({
+        success: true,
+        message: "User registered successfully",
+        data: newUser,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error inserting user",
+        error: error.message,
+      });
+    }
+  }
 
-const deleteUser = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const updatedUser = await userService.deleteUser(id);
-  res.send(updatedUser);
-};
+  async updateOne(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+      const updatedUser = await UserService.updateOne(id, req.body);
+      res.status(200).json({
+        success: true,
+        message: "User updated successfully",
+        data: updatedUser,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error updating user",
+        error: error.message,
+      });
+    }
+  }
 
-const getUser = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const users = await userService.getUser(id);
+  async deleteOne(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+      await UserService.deleteOne(id);
+      res.status(200).json({
+        success: true,
+        message: "User deleted successfully",
+        data: null,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: "Error deleting user",
+        error: error.message,
+      });
+    }
+  }
+}
 
-  res.send(users.rows);
-};
-
-export const userController = {
-  getAll,
-  create,
-  update,
-  deleteUser,
-  getUser,
-};
+export const UserController = new Controller();

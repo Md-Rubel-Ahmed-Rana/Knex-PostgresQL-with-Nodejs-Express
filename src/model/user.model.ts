@@ -4,22 +4,22 @@ import { IUser } from "../interfaces/user.interface";
 export class UserModel {
   static tableName: string = "users";
 
-  public static async all() {
+  public static async findMany() {
     return Model.select("*").from(this.tableName);
   }
 
-  public static async insert(data: IUser) {
+  public static async insertOne(data: IUser) {
     return Model(this.tableName).insert(data).returning("*");
   }
-  public static async getUserById(id: string) {
+  public static async findById(id: string) {
     return Model.raw(`select * from ${this.tableName} where id = ${id}`);
   }
 
-  public static async update(id: string, data: IUser) {
+  public static async updateOne(id: string, data: IUser) {
     return Model(this.tableName).where({ id }).update(data).returning("*");
   }
 
-  public static async delete(id: string) {
+  public static async deleteOne(id: string) {
     return Model(this.tableName).where({ id }).del().returning("*");
   }
 

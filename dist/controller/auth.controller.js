@@ -11,17 +11,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const auth_service_1 = require("../services/auth.service");
-const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password } = req.body;
-    const user = yield auth_service_1.AuthService.login(email, password);
-    res.send(user);
-});
-const auth = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email } = req;
-    const user = yield auth_service_1.AuthService.auth(email);
-    res.send(user);
-});
-exports.AuthController = {
-    login,
-    auth,
-};
+class Controller {
+    login(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { email, password } = req.body;
+                const token = yield auth_service_1.AuthService.login(email, password);
+                res.status(200).json({
+                    success: true,
+                    message: "Login successful",
+                    token: token,
+                });
+            }
+            catch (error) {
+                res.status(401).json({
+                    success: false,
+                    message: "Login failed",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    auth(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { email } = req.body;
+                const user = yield auth_service_1.AuthService.auth(email);
+                res.status(200).json({
+                    success: true,
+                    message: "Authentication successful",
+                    user: user,
+                });
+            }
+            catch (error) {
+                res.status(401).json({
+                    success: false,
+                    message: "Authentication failed",
+                    error: error.message,
+                });
+            }
+        });
+    }
+}
+exports.AuthController = new Controller();

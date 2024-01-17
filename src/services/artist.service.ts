@@ -1,35 +1,31 @@
 import { ArtistModel } from "../model/artist.model";
 import { IArtist } from "../interfaces/artist.interface";
 
-const findMany = async () => {
-  const data = await ArtistModel.all();
-  return data;
-};
+class Service {
+  async findMany() {
+    const data = await ArtistModel.findMany();
+    return data;
+  }
 
-const findById = async (id: string) => {
-  const data = await ArtistModel.findById(id);
-  return data?.rows[0];
-};
+  async findById(id: string) {
+    const data = await ArtistModel.findById(id);
+    return data?.rows[0];
+  }
 
-const create = async (data: IArtist) => {
-  const newData = await ArtistModel.insert(data);
-  return newData;
-};
+  async insertOne(data: IArtist) {
+    const newData = await ArtistModel.insertOne(data);
+    return newData;
+  }
 
-const update = async (id: string, data: IArtist) => {
-  const updatedRow = await ArtistModel.update(id, data);
-  return updatedRow[0];
-};
+  async updateOne(id: string, data: IArtist) {
+    const updatedRow = await ArtistModel.updateOne(id, data);
+    return updatedRow[0];
+  }
 
-const deleteOne = async (id: string) => {
-  const data = await ArtistModel.delete(id);
-  return data;
-};
+  async deleteOne(id: string) {
+    const data = await ArtistModel.deleteOne(id);
+    return data;
+  }
+}
 
-export const ArtistService = {
-  findMany,
-  create,
-  update,
-  findById,
-  deleteOne,
-};
+export const ArtistService = new Service();

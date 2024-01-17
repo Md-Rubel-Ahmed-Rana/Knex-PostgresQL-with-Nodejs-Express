@@ -16,31 +16,37 @@ exports.AuthService = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const user_model_1 = require("../model/user.model");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const login = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_model_1.UserModel.findByEmail(email);
-    if (!user) {
-        return "User not found";
+class Service {
+    login(email, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield user_model_1.UserModel.findByEmail(email);
+            if (!user) {
+                throw new Error("User not found");
+            }
+            // match password
+            const isMatchedPassword = yield bcrypt_1.default.compare(password, user.password);
+            if (!isMatchedPassword) {
+                throw new Error("Incorrect password");
+            }
+            const jwtPayload = {
+                id: user.id,
+                email: user.email,
+            };
+            // generate access token
+            const token = jsonwebtoken_1.default.sign(jwtPayload, process.env.JWT_SECRET, {
+                expiresIn: "360d",
+            });
+            return `Bearer ${token}`;
+        });
     }
-    // match password
-    const isMatchedPassword = yield bcrypt_1.default.compare(password, user.password);
-    if (isMatchedPassword) {
-        return "Did't matched password";
+    auth(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield user_model_1.UserModel.findByEmail(email);
+            if (!user) {
+                throw new Error("User not found");
+            }
+            return user;
+        });
     }
-    const jwtPayload = {
-        id: user.id,
-        email: user.email,
-    };
-    // generate access token
-    const token = jsonwebtoken_1.default.sign(jwtPayload, process.env.JWT_SECRET, {
-        expiresIn: "360d",
-    });
-    return `Bearer ${token}`;
-});
-const auth = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_model_1.UserModel.findByEmail(email);
-    return user;
-});
-exports.AuthService = {
-    login,
-    auth,
-};
+}
+exports.AuthService = new Service();

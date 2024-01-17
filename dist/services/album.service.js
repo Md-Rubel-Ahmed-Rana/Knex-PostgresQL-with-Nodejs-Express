@@ -12,41 +12,47 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AlbumService = void 0;
 const album_artists_model_1 = require("../model/album.artists.model");
 const album_model_1 = require("../model/album.model");
-const findMany = () => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield album_model_1.AlbumModel.findMany();
-    return data;
-});
-const findById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield album_model_1.AlbumModel.findById(id);
-    return data === null || data === void 0 ? void 0 : data.rows[0];
-});
-const insertOne = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    const [newData] = yield album_model_1.AlbumModel.insertOne(data);
-    // create album_artist
-    if (newData) {
-        const albumArtistData = {
-            album_id: newData.id,
-            artist_id: newData.user_id,
-        };
-        yield album_artists_model_1.AlbumArtistModel.insertOne(albumArtistData);
-        return newData;
+class Service {
+    findMany() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield album_model_1.AlbumModel.findMany();
+            return data;
+        });
     }
-    else {
-        return "Album did't added";
+    findById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield album_model_1.AlbumModel.findById(id);
+            return data === null || data === void 0 ? void 0 : data.rows[0];
+        });
     }
-});
-const updateOne = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-    const updatedRow = yield album_model_1.AlbumModel.updateOne(id, data);
-    return updatedRow[0];
-});
-const deleteOne = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield album_model_1.AlbumModel.deleteOne(id);
-    return data;
-});
-exports.AlbumService = {
-    findMany,
-    insertOne,
-    updateOne,
-    findById,
-    deleteOne,
-};
+    insertOne(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const [newData] = yield album_model_1.AlbumModel.insertOne(data);
+            // create album_artist
+            if (newData) {
+                const albumArtistData = {
+                    album_id: newData.id,
+                    artist_id: newData.user_id,
+                };
+                yield album_artists_model_1.AlbumArtistModel.insertOne(albumArtistData);
+                return newData;
+            }
+            else {
+                return "Album did't added";
+            }
+        });
+    }
+    updateOne(id, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const updatedRow = yield album_model_1.AlbumModel.updateOne(id, data);
+            return updatedRow[0];
+        });
+    }
+    deleteOne(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield album_model_1.AlbumModel.deleteOne(id);
+            return data;
+        });
+    }
+}
+exports.AlbumService = new Service();

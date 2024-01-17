@@ -12,12 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArtistModel = void 0;
 const knex_1 = require("../database/knex");
 class ArtistModel {
-    static all() {
+    static findMany() {
         return __awaiter(this, void 0, void 0, function* () {
             return knex_1.Model.select("*").from(this.tableName);
         });
     }
-    static insert(data) {
+    static insertOne(data) {
         return __awaiter(this, void 0, void 0, function* () {
             return (0, knex_1.Model)(this.tableName).insert(data).returning("*");
         });
@@ -27,12 +27,12 @@ class ArtistModel {
             return knex_1.Model.raw(`select * from ${this.tableName} where id = ${id}`);
         });
     }
-    static update(id, data) {
+    static updateOne(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
             return (0, knex_1.Model)(this.tableName).where({ id }).update(data).returning("*");
         });
     }
-    static delete(id) {
+    static deleteOne(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return (0, knex_1.Model)(this.tableName).where({ id }).del().returning("*");
         });
