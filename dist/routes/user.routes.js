@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userRoutes = void 0;
 const user_controller_1 = require("../controller/user.controller");
-const router = require("express").Router();
+const express_1 = require("express");
+const router = (0, express_1.Router)();
 router.get("/", user_controller_1.userController.getAll);
 router.post("/create", user_controller_1.userController.create);
 router.patch("/update/:id", user_controller_1.userController.update);

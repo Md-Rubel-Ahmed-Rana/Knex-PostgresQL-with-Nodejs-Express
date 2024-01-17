@@ -1,6 +1,8 @@
 import { userController } from "../controller/user.controller";
 
-const router = require("express").Router();
+import { Router } from "express";
+
+const router = Router();
 
 router.get("/", userController.getAll);
 

@@ -1,7 +1,5 @@
-const environment = process.env.NODE_ENV || "development";
 import knex from "knex";
-import { knexConfig } from "../config/knexfile";
+const knexConfig = require("./knexfile");
 
-// const config = require("../config/knexfile")[environment];
-
-export const Model = knex(knexConfig.development);
+console.log(knexConfig.client);
+export const Model = knex(knexConfig);

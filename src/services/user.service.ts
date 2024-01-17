@@ -1,31 +1,32 @@
-import { Model } from "../database/knex";
+import { IUser } from "../interfaces/user.interface";
+import { UserModel } from "../model/user.model";
+import bcrypt from "bcrypt";
 
 const getAll = async () => {
-  const users = await Model.select("*").from("users");
+  const users = await UserModel.all();
   return users;
 };
 
-const create = async (data: any) => {
-  const newUser = await Model("users").insert(data).returning("*");
+const getUser = async (id: string) => {
+  const user = await UserModel.getUserById(id);
+  return user;
+};
+
+const create = async (data: IUser) => {
+  const hashedPassword = await bcrypt.hash(data.password, 12);
+  data.password = hashedPassword;
+  const newUser = await UserModel.insert(data);
   return newUser;
 };
 
-const update = async (id: string, data: any) => {
-  const updatedUser = await Model("users")
-    .where({ id })
-    .update(data)
-    .returning("*");
+const update = async (id: string, data: IUser) => {
+  const updatedUser = await UserModel.update(id, data);
   return updatedUser;
 };
 
 const deleteUser = async (id: string) => {
-  const updatedUser = await Model("users").where({ id }).del().returning("*");
+  const updatedUser = await UserModel.delete(id);
   return updatedUser;
-};
-
-const getUser = async (id: string) => {
-  const user = await Model.raw(`select * from users where id = ${id}`);
-  return user;
 };
 
 export const userService = {

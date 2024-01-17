@@ -8,31 +8,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userService = void 0;
-const knex_1 = require("../database/knex");
+const user_model_1 = require("../model/user.model");
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const getAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield knex_1.Model.select("*").from("users");
+    const users = yield user_model_1.UserModel.all();
     return users;
 });
+const getUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.UserModel.getUserById(id);
+    return user;
+});
 const create = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = yield (0, knex_1.Model)("users").insert(data).returning("*");
+    const hashedPassword = yield bcrypt_1.default.hash(data.password, 12);
+    data.password = hashedPassword;
+    const newUser = yield user_model_1.UserModel.insert(data);
     return newUser;
 });
 const update = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-    const updatedUser = yield (0, knex_1.Model)("users")
-        .where({ id })
-        .update(data)
-        .returning("*");
+    const updatedUser = yield user_model_1.UserModel.update(id, data);
     return updatedUser;
 });
 const deleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const updatedUser = yield (0, knex_1.Model)("users").where({ id }).del().returning("*");
+    const updatedUser = yield user_model_1.UserModel.delete(id);
     return updatedUser;
-});
-const getUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield knex_1.Model.raw(`select * from users where id = ${id}`);
-    return user;
 });
 exports.userService = {
     getAll,

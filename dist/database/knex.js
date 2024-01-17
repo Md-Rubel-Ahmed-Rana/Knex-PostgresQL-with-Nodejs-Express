@@ -4,8 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Model = void 0;
-const environment = process.env.NODE_ENV || "development";
 const knex_1 = __importDefault(require("knex"));
-const knexfile_1 = require("../config/knexfile");
-// const config = require("../config/knexfile")[environment];
-exports.Model = (0, knex_1.default)(knexfile_1.knexConfig.development);
+const knexConfig = require("./knexfile");
+console.log(knexConfig.client);
+exports.Model = (0, knex_1.default)(knexConfig);
