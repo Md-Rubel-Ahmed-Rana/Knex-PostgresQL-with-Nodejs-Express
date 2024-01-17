@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserModel = void 0;
+exports.ArtistModel = void 0;
 const knex_1 = require("../database/knex");
-class UserModel {
+class ArtistModel {
     static all() {
         return __awaiter(this, void 0, void 0, function* () {
             return knex_1.Model.select("*").from(this.tableName);
@@ -37,11 +37,6 @@ class UserModel {
             return (0, knex_1.Model)(this.tableName).where({ id }).del().returning("*");
         });
     }
-    static findByEmail(email) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return knex_1.Model.select("*").from(this.tableName).where({ email }).first();
-        });
-    }
 }
-exports.UserModel = UserModel;
-UserModel.tableName = "users";
+exports.ArtistModel = ArtistModel;
+ArtistModel.tableName = "artists";

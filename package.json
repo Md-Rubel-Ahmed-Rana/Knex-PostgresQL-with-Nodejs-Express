@@ -4,7 +4,8 @@
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "migrate": "node ./src/scripts/migrate-script.js",
     "migrate:apply": "cd ./src/database/ && knex migrate:latest",
-    "migrate:list": "cd ./src/database/ && knex migrate:list"
+    "migrate:list": "cd ./src/database/ && knex migrate:list",
+    "migrate:status": "cd ./src/database/ && knex migrate:status"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
