@@ -1,12 +1,18 @@
 import { UserController } from "../controller/user.controller";
 
 import { Router } from "express";
+import requestValidator from "../middlewares/requestValidator";
+import { userValidatorPostSchema } from "../validations/user.validate";
 
 const router = Router();
 
 router.get("/", UserController.findMany);
 
-router.post("/create", UserController.insertOne);
+router.post(
+  "/register",
+  requestValidator(userValidatorPostSchema),
+  UserController.insertOne
+);
 
 router.patch("/update/:id", UserController.updateOne);
 
