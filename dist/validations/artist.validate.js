@@ -9,5 +9,8 @@ exports.artistValidatorPostSchema = joi_1.default.object({
     name: joi_1.default.string().required(),
 });
 exports.artistValidatorUpdateSchema = joi_1.default.object({
+    id: joi_1.default.number().optional(),
     name: joi_1.default.string().optional(),
+    created_at: joi_1.default.date().optional(),
+    updated_at: joi_1.default.date().optional(),
 });

@@ -12,8 +12,11 @@ exports.songValidatorPostSchema = joi_1.default.object({
     user_id: joi_1.default.number().integer().required(),
 });
 exports.songValidatorUpdateSchema = joi_1.default.object({
+    id: joi_1.default.number().optional(),
     title: joi_1.default.string().optional(),
     duration: joi_1.default.number().optional(),
     album_id: joi_1.default.number().integer().optional(),
     user_id: joi_1.default.number().integer().optional(),
+    created_at: joi_1.default.date().optional(),
+    updated_at: joi_1.default.date().optional(),
 });

@@ -26,7 +26,7 @@ class Controller {
 
   async auth(req: Request, res: Response) {
     try {
-      const { email } = req.body;
+      const { email } = req;
       const user = await AuthService.auth(email);
 
       res.status(200).json({

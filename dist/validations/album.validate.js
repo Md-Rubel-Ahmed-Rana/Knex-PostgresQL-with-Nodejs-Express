@@ -12,8 +12,11 @@ exports.albumValidatorPostSchema = joi_1.default.object({
     genre: joi_1.default.string().required(),
 });
 exports.albumValidatorUpdateSchema = joi_1.default.object({
+    id: joi_1.default.number().optional(),
     title: joi_1.default.string().optional(),
     release_year: joi_1.default.number().integer().optional(),
     user_id: joi_1.default.number().integer().optional(),
     genre: joi_1.default.string().optional(),
+    created_at: joi_1.default.date().optional(),
+    updated_at: joi_1.default.date().optional(),
 });

@@ -37,7 +37,7 @@ class Controller {
     auth(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { email } = req.body;
+                const { email } = req;
                 const user = yield auth_service_1.AuthService.auth(email);
                 res.status(200).json({
                     success: true,

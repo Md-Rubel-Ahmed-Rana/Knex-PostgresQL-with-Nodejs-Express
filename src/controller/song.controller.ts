@@ -92,11 +92,11 @@ class Controller {
   async deleteOne(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
-      const data = await SongService.deleteOne(id);
+      await SongService.deleteOne(id);
       res.status(200).json({
         success: true,
         message: "Song deleted",
-        data: data,
+        data: null,
       });
     } catch (error: any) {
       res.status(500).json({

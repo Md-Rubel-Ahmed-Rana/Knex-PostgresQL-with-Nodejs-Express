@@ -5,7 +5,9 @@
     "migrate": "node ./src/scripts/migrate-script.js",
     "migrate:apply": "cd ./src/database/ && knex migrate:latest",
     "migrate:list": "cd ./src/database/ && knex migrate:list",
-    "migrate:status": "cd ./src/database/ && knex migrate:status"
+    "migrate:status": "cd ./src/database/ && knex migrate:status",
+    "seed": "node ./src/scripts/seed-script.js",
+    "seed:run": "cd ./src/database/ && knex seed:run"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.2",

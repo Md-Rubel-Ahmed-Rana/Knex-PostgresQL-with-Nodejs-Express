@@ -94,11 +94,11 @@ class Controller {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const id = req.params.id;
-                const data = yield artist_service_1.ArtistService.deleteOne(id);
+                yield artist_service_1.ArtistService.deleteOne(id);
                 res.status(200).json({
                     success: true,
                     message: "Artist deleted",
-                    data: data,
+                    data: null,
                 });
             }
             catch (error) {

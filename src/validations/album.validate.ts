@@ -9,8 +9,11 @@ export const albumValidatorPostSchema = Joi.object<IAlbum>({
 });
 
 export const albumValidatorUpdateSchema = Joi.object<IAlbum>({
+  id: Joi.number().optional(),
   title: Joi.string().optional(),
   release_year: Joi.number().integer().optional(),
   user_id: Joi.number().integer().optional(),
   genre: Joi.string().optional(),
+  created_at: Joi.date().optional(),
+  updated_at: Joi.date().optional(),
 });

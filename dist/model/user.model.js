@@ -14,7 +14,11 @@ const knex_1 = require("../database/knex");
 class UserModel {
     static findMany() {
         return __awaiter(this, void 0, void 0, function* () {
-            return knex_1.Model.select("*").from(this.tableName);
+            const users = yield knex_1.Model.select("*").from(this.tableName);
+            users.forEach(function (user) {
+                user === null || user === void 0 ? true : delete user.password;
+            });
+            return users;
         });
     }
     static insertOne(data) {
@@ -23,13 +27,21 @@ class UserModel {
         });
     }
     static findById(id) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            return knex_1.Model.raw(`select * from ${this.tableName} where id = ${id}`);
+            const user = yield knex_1.Model.raw(`select * from ${this.tableName} where id = ${id}`);
+            (_a = user === null || user === void 0 ? void 0 : user.rows[0]) === null || _a === void 0 ? true : delete _a.password;
+            return user;
         });
     }
     static updateOne(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            return (0, knex_1.Model)(this.tableName).where({ id }).update(data).returning("*");
+            const [user] = yield (0, knex_1.Model)(this.tableName)
+                .where({ id })
+                .update(data)
+                .returning("*");
+            user === null || user === void 0 ? true : delete user.password;
+            return user;
         });
     }
     static deleteOne(id) {
@@ -39,7 +51,12 @@ class UserModel {
     }
     static findByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
-            return knex_1.Model.select("*").from(this.tableName).where({ email }).first();
+            const user = yield knex_1.Model.select("*")
+                .from(this.tableName)
+                .where({ email })
+                .first();
+            user === null || user === void 0 ? true : delete user.password;
+            return user;
         });
     }
 }
