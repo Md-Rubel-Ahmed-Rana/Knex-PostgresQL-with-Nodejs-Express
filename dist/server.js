@@ -14,6 +14,14 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
+// base route
+app.get("/", (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "Building a Music Library System server is running",
+        data: null,
+    });
+});
 // routes
 app.use("/api/v1", root_routes_1.rootRoutes);
 // 404 route not found
@@ -33,6 +41,7 @@ app.use((error, req, res, next) => {
         error: error,
     });
 });
+// starting application
 app.listen(port, () => {
     console.log(`Listening on port: ${port}`);
 });
