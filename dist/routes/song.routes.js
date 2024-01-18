@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SongRoutes = void 0;
+const express_1 = require("express");
+const song_controller_1 = require("../controller/song.controller");
+const requestValidator_1 = __importDefault(require("../middlewares/requestValidator"));
+const song_validate_1 = require("../validations/song.validate");
+const verifyJwt_1 = __importDefault(require("../middlewares/verifyJwt"));
+const auth_guard_1 = __importDefault(require("../middlewares/auth.guard"));
+const router = (0, express_1.Router)();
+router.get("/", verifyJwt_1.default, auth_guard_1.default, song_controller_1.SongController.findMany);
+router.get("/album/:album_id", verifyJwt_1.default, auth_guard_1.default, song_controller_1.SongController.findSongsByAlbum);
+router.get("/artist/:user_id", verifyJwt_1.default, auth_guard_1.default, song_controller_1.SongController.findSongsByArtist);
+router.post("/add", verifyJwt_1.default, auth_guard_1.default, (0, requestValidator_1.default)(song_validate_1.songValidatorPostSchema), song_controller_1.SongController.insertOne);
+router.patch("/update/:id", verifyJwt_1.default, auth_guard_1.default, (0, requestValidator_1.default)(song_validate_1.songValidatorUpdateSchema), song_controller_1.SongController.updateOne);
+router.delete("/delete/:id", verifyJwt_1.default, auth_guard_1.default, song_controller_1.SongController.deleteOne);
+router.get("/single/:id", verifyJwt_1.default, auth_guard_1.default, song_controller_1.SongController.findById);
+exports.SongRoutes = router;

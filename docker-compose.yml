@@ -1,0 +1,16 @@
+version: "3"
+services:
+
+  m360ict:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    container_name: m360ict-node-app
+    ports:
+      - "5000:5000"
+    restart: always
+    volumes:
+      - .:/app
+      - /app/node_modules
+  
+  

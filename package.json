@@ -1,11 +1,32 @@
 {
   "scripts": {
-    "dev": "nodemon ./src/server.js",
-    "migrate": "node ./scripts/migrate-script.js"
+    "start": "node ./dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "migrate": "node ./src/scripts/migrate-script.js",
+    "migrate:apply": "cd ./src/database/ && knex migrate:latest",
+    "migrate:list": "cd ./src/database/ && knex migrate:list",
+    "migrate:status": "cd ./src/database/ && knex migrate:status",
+    "seed": "node ./src/scripts/seed-script.js",
+    "seed:run": "cd ./src/database/ && knex seed:run"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "joi": "^17.11.1",
+    "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
-    "pg": "^8.11.3"
+    "knex-populate": "^2.2.0",
+    "pg": "^8.11.3",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^20.11.4",
+    "ts-node-dev": "^2.0.0"
   }
 }
