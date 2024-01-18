@@ -5,8 +5,6 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN npx tsc
-
 COPY . .
 
 EXPOSE 5000
