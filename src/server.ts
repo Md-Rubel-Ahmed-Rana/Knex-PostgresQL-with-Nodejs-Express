@@ -34,6 +34,7 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
+// starting application
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });
